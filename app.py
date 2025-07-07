@@ -1,13 +1,9 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-import matplotlib.font_manager as fm
 import os
 
-# ✅ 한글 폰트 설정
-font_path = "NanumHumanRegular.ttf"  # 올바른 폰트 파일명
-fontprop = fm.FontProperties(fname=font_path)
-plt.rcParams['font.family'] = fontprop.get_name()
+# ✅ 한글 폰트 설정 제거 (기본 폰트 사용)
 plt.rcParams['axes.unicode_minus'] = False
 
 # ✅ 설정
@@ -48,11 +44,10 @@ if st.button("저장 및 분석"):
     pivot = df_all.pivot_table(index="category", columns="month", values="amount", aggfunc="sum", fill_value=0)
     fig1, ax1 = plt.subplots(figsize=(10, 5))
     pivot.plot(kind="bar", ax=ax1)
-    ax1.set_ylabel("지출 금액", fontproperties=fontprop)
-    ax1.set_xlabel("")  # ✅ 'category' 삭제
-    ax1.set_title("월별 지출 비교", fontproperties=fontprop)
-    plt.xticks(rotation=0, fontproperties=fontprop)
-    plt.legend(prop=fontprop)
+    ax1.set_ylabel("지출 금액")
+    ax1.set_xlabel("")  # 'category' 제거
+    ax1.set_title("월별 지출 비교")
+    plt.xticks(rotation=0)
     st.pyplot(fig1)
 
     # ✅ 연간 평균 지출 그래프
@@ -60,10 +55,10 @@ if st.button("저장 및 분석"):
     avg_df = df_all.groupby("category")["amount"].mean()
     fig2, ax2 = plt.subplots(figsize=(10, 5))
     avg_df.plot(kind="bar", ax=ax2, color="tomato")
-    ax2.set_ylabel("지출 금액", fontproperties=fontprop)
-    ax2.set_xlabel("")  # ✅ 'category' 삭제
-    ax2.set_title("카테고리별 연간 평균 지출", fontproperties=fontprop)
-    plt.xticks(rotation=0, fontproperties=fontprop)
+    ax2.set_ylabel("지출 금액")
+    ax2.set_xlabel("")  # 'category' 제거
+    ax2.set_title("카테고리별 연간 평균 지출")
+    plt.xticks(rotation=0)
     st.pyplot(fig2)
 
 # ✅ 데이터 초기화
